@@ -13,7 +13,7 @@ enum class Type {
     Shadow,
     Light,
     Psychic,
-    COUNT // always last
+    COUNT // always last = number of types
 };
 
 float getEffectiveness(Type attacker, Type defender);

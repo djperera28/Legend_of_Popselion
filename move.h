@@ -1,7 +1,7 @@
 #pragma once
 #include "typechart.h"
 
-struct Move {
+struct Move { // Represents a move that a Popsmon can use
     std::string name;
     int power;
     Type type;

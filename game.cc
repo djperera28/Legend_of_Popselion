@@ -41,9 +41,9 @@ void Game::showControls() {
 void Game::drawBattleUI(const Popsmon& active, const Popsmon& wildPopsmon) {
     std::cout << "\n========================================\n";
     std::cout << "   YOUR POPSMON              WILD POPSMON\n";
-    std::cout << "   " << active.name << " (HP: " << active.health << ")\n";
+    std::cout << "   " << active.name << " (HP: " << active.health << "/" << active.maxHealth << ")\n";
     std::cout << "   VS\n";
-    std::cout << "   " << wildPopsmon.name << " (HP: " << wildPopsmon.health << ")\n";
+    std::cout << "   " << wildPopsmon.name << " (HP: " << wildPopsmon.health << "/" << wildPopsmon.maxHealth << ")\n";
     std::cout << "========================================\n";
 }
 
@@ -71,10 +71,11 @@ bool Game::battle(Player& player, Popsmon& wildPopsmon) {
 
         std::cout << "\nChoose your action:\n";
         for (int i = 0; i < (int)active.moves.size(); i++) {
-            std::cout << "  " << i+1 << ". " << active.moves[i].name
-                      << "  [" << typeToString(active.moves[i].type) << "]\n";
+        std::cout << "  " << i+1 << ". " << active.moves[i].name
+                  << "  [" << typeToString(active.moves[i].type) << "]\n";
         }
         std::cout << "  " << active.moves.size() + 1 << ". Switch Popsmon\n";
+        std::cout << "  " << active.moves.size() + 2 << ". Capture\n";
         std::cout << "========================================\n";
         std::cout << "Action: ";
 
@@ -122,6 +123,16 @@ bool Game::battle(Player& player, Popsmon& wildPopsmon) {
                 std::cout << "Invalid choice.\n";
                 continue;
             }
+        
+        }
+        else if (choice == (int)active.moves.size() + 2) {
+            if (attemptCapture(wildPopsmon)) {
+                std::cout << "You successfully captured the wild " << wildPopsmon.name << "!\n";
+                player.addPopsmon(wildPopsmon);
+                return true;
+            } else {
+                std::cout << "The wild " << wildPopsmon.name << " escaped!\n";
+            }
         }
         else {
             std::cout << "Invalid choice.\n";
@@ -154,6 +165,23 @@ bool Game::battle(Player& player, Popsmon& wildPopsmon) {
     }
 }
 
+bool Game::attemptCapture(const Popsmon& wildPopsmon) { // Capture logic
+    // Lower HP increases capture chance
+    float healthRatio = (float)wildPopsmon.health / wildPopsmon.maxHealth; // Health ratio
+
+    // Base chance 50%
+    float baseChance = 0.5f;
+
+    //Reduce chance based on health
+    float finalChance = baseChance * (1.0f - healthRatio); // Higher chance with lower health
+
+    // Clamp minimum chance
+    if (finalChance < 0.1f) finalChance = 0.1f; // Minimum 10% chance
+
+    float roll = std::rand() / static_cast<float>(RAND_MAX);   // Random roll between 0 and 1 
+    return roll < finalChance;
+}
+
 void Game::start() {
     std::srand(std::time(0));
     Popsopedia::init();
@@ -163,7 +191,7 @@ void Game::start() {
         std::cout << "\n========================================\n";
         std::cout << "          ▒█▀▀█ ▒█▀▀█ ▒█▀▀█ ▒█▀▀█  \n";
         std::cout << "          ▒█▄▄█ ▒█  █ ▒█▄▄█ ▒█▄▄▄     \n";
-        std::cout << "          ▒█    ▒█▄▄█ ▒█     ▄▄▄█      \n";
+        std::cout << "          ▒█    ▒█▄▄█ ▒█    ▒▄▄▄█      \n";
         std::cout << "========================================\n";
         std::cout << "            POPSMON ADVENTURE\n";
         std::cout << "========================================\n";
@@ -200,7 +228,8 @@ void Game::start() {
         std::cout << "\n========================================\n";
         std::cout << "  1. Explore\n";
         std::cout << "  2. View Popsmon\n";
-        std::cout << "  3. Exit Game\n";
+        std::cout << "  3. Pops Center\n";
+        std::cout << "  4. Exit Game\n";
         std::cout << "========================================\n";
         std::cout << "Choose: ";
 
@@ -216,7 +245,16 @@ void Game::start() {
             player.showCollection();
         }
         else if (choice == 3) {
-            std::cout << "Thanks for playing!\n";
+            std::cout << "\n========================================\n";
+            std::cout << "             POPS CENTER\n";
+            std::cout << "========================================\n";
+            for (auto& p : player.popsmonCollection) {
+                p.heal(p.maxHealth); // Heal to max health
+            }
+            std::cout << "\nYour Popsmon have been fully healed.\n";
+        }
+        else if (choice == 4) {
+            std::cout << "See you again Traveler!\n";
             break;
         }
         else {
