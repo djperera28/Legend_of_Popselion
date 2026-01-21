@@ -21,7 +21,7 @@ void Popsopedia::init() {
         p.health = p.maxHealth;
         p.attack = 8;
         p.moves = {
-            {"Heat Blast", 4, Type::Fire},
+            {"Heat Burst", 4, Type::Fire},
             {"Solar Smash", 6, Type::Fire}
         };
         registry[p.name] = p;
@@ -37,7 +37,7 @@ void Popsopedia::init() {
         p.attack = 6;
         p.moves = {
             {"Root Slam", 4, Type::Nature},
-            {"BRING ME..", 7, Type::Nature}
+            {"BRING ME..?", 7, Type::Nature}
         };
         registry[p.name] = p;
     }
@@ -101,7 +101,7 @@ void Popsopedia::init() {
         p.attack = 8;
         p.moves = {
             {"Tornado", 4, Type::Wind},
-            {"Whirlwind", 6, Type::Wind}
+            {"Winds of Wrath", 6, Type::Wind}
         };
         registry[p.name] = p;
     }
@@ -145,11 +145,28 @@ void Popsopedia::init() {
         p.health = p.maxHealth;
         p.attack = 8;
         p.moves = {
-            {"Hyper Charge", 4, Type::Psychic},
+            {"The Force", 4, Type::Psychic},
             {"Psionic Judgement", 6, Type::Psychic}
         };
         registry[p.name] = p;
     }
+
+    // Legendary Popsmon (___)
+    { 
+        Popsmon p;
+        p.name = "Pops-El";
+        p.type = Type::Infinity;
+        p.maxHealth = 999;
+        p.health = p.maxHealth;
+        p.attack = 99;
+        p.moves = {
+            {"Big swing", 10, Type::Infinity},
+            {"Swap out", 0, Type::Infinity},
+            {"Ult", 0, Type::Infinity}
+        };
+        registry[p.name] = p;
+    }
+
 }
 
 Popsmon Popsopedia::get(const std::string& name) { // Retrieve Popsmon by name

@@ -36,6 +36,7 @@ std::string typeToString(Type type) {
         case Type::Shadow:  return "Shadow";
         case Type::Light:   return "Light";
         case Type::Psychic: return "Psychic";
+        case Type::Infinity:return "Infinity";
         default:            return "Unknown";
     }
 }

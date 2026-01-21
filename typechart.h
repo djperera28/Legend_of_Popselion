@@ -13,6 +13,7 @@ enum class Type {
     Shadow,
     Light,
     Psychic,
+    Infinity,
     COUNT // always last = number of types
 };
 
