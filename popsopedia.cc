@@ -14,17 +14,17 @@ void Popsopedia::init() {
 
     // Solarion (Fire)
     {
-        Popsmon p;
-        p.name = "Solarion";
-        p.type = Type::Fire;
-        p.maxHealth = 120;
-        p.health = p.maxHealth;
-        p.attack = 8;
-        p.moves = {
+        Popsmon p;                          // Define Popsmon
+        p.name = "Solarion";                // Name
+        p.type = Type::Fire;                // Type
+        p.maxHealth = 120;                  // Max Health
+        p.health = p.maxHealth;             // Current Health
+        p.attack = 8;                       // Attack stat
+        p.moves = {                         // Moves
             {"Heat Burst", 4, Type::Fire},
             {"Solar Smash", 6, Type::Fire}
         };
-        registry[p.name] = p;
+        registry[p.name] = p;               // Add to registry
     }
 
     // Thornbreaker (Nature)

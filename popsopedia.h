@@ -12,7 +12,7 @@ class Popsopedia {
         static Popsmon randomWild();
 
     private:
-        static std::unordered_map<std::string, Popsmon> registry;
+        static std::unordered_map<std::string, Popsmon> registry; // name to Popsmon mapping
 };
 
 #endif

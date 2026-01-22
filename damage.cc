@@ -4,22 +4,22 @@
 #include <algorithm>
 
 static float getRandomMultiplier() {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
+    static std::random_device rd; // Seed for RNG
+    static std::mt19937 gen(rd()); // Mersenne Twister RNG, pseudo-random but good enough
     static std::uniform_real_distribution<float> dist(0.85f, 1.00f);
-    return dist(gen);
+    return dist(gen); 
 }
 
-float calculateDamage(
+float calculateDamage( // Calculates damage from attacker to defender using a specific move
     const Popsmon& attacker,
     const Popsmon& defender,
     const Move& move
 ) {
-    float typeMult = getEffectiveness(move.type, defender.type);
-    float randomMult = getRandomMultiplier();
+    float typeMult = getEffectiveness(move.type, defender.type); // Type effectiveness
+    float randomMult = getRandomMultiplier();                    // Random factor between 0.85 and 1.0
 
-    float base = attacker.attack * move.power;
-    float dmg = base * typeMult * randomMult;
+    float base = attacker.attack * move.power;                   // Base damage calculation
+    float dmg = base * typeMult * randomMult;                    // Final damage with multipliers
 
-    return std::max(1.0f, dmg);
+    return std::max(1.0f, dmg);                                  // Ensure at least 1 damage is dealt
 }

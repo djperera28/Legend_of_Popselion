@@ -3,8 +3,8 @@
 
 //Effectiveness Multiplier
 float getEffectiveness(Type attacker, Type defender) {
-    static float chart[9][9] = {
-//9x9 type effectiveness matrix
+    static float chart[10][9] = {
+//10x10 type effectiveness matrix
 //Rows = attacker, columns = defender
     //                F     N     W     E     Wd    Er    Sh    L     P
     /* Fire     */  {1.0f, 2.0f, 0.5f, 1.0f, 1.0f, 0.5f, 2.0f, 1.0f, 1.0f},
@@ -17,7 +17,9 @@ float getEffectiveness(Type attacker, Type defender) {
 
     /* Shadow   */  {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 2.0f},
     /* Light    */  {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 1.0f, 0.5f},
-    /* Psychic  */  {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 2.0f, 1.0f}
+    /* Psychic  */  {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 2.0f, 1.0f},
+    
+    /* Infinity */  {1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f, 1.5f},
 
     };
     
