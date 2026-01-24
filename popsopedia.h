@@ -7,7 +7,7 @@
 
 class Popsopedia {
     public:
-        static void init(); // loads all Popsmon into the registry
+        static void init();                                       // loads all Popsmon into the registry
         static Popsmon get(const std::string& name);
         static Popsmon randomWild();
 

@@ -1,10 +1,14 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <algorithm>
 #include "game.h"
 #include "popsopedia.h"
 #include "damage.h"
 #include "typechart.h"
+
+
+
 
 void Game::showControls() {
     std::cout << "\n========================================\n";
@@ -42,16 +46,16 @@ void Game::drawBattleUI(const Popsmon& active, const Popsmon& wildPopsmon) {
     std::cout << "\n========================================\n";
     std::cout << "   YOUR POPSMON              WILD POPSMON\n";
     std::cout << "   " << active.name << " (HP: " << active.health << "/" << active.maxHealth << ")\n";
-    std::cout << "   VS\n";
+    std::cout << "   \033[91mVS\033[0m\n";
     std::cout << "   " << wildPopsmon.name << " (HP: " << wildPopsmon.health << "/" << wildPopsmon.maxHealth << ")\n";
     std::cout << "========================================\n";
 }
 
 Popsmon Game::chooseStarter() {
     std::cout << "\nChoose your starter Popsmon:\n";
-    std::cout << "1. Solarion (Fire)\n";
-    std::cout << "2. Thornbreaker (Nature)\n";
-    std::cout << "3. Aquastral (Water)\n";
+    std::cout << "1. \033[31mSolarion (Fire)\033[0m\n";
+    std::cout << "2. \033[32mThornbreaker (Nature)\033[0m\n";
+    std::cout << "3. \033[34mAquastral (Water)\033[0m\n";
     std::cout << "Choice: ";
 
     int choice;
@@ -59,11 +63,15 @@ Popsmon Game::chooseStarter() {
 
     if (choice == 1) return Popsopedia::get("Solarion");
     if (choice == 2) return Popsopedia::get("Thornbreaker");
-    return Popsopedia::get("Aquastral");
+    if (choice == 3) return Popsopedia::get("Aquastral");
+    else {
+        std::cout << "Invalid choice, defaulting to Solarion.\n";
+        return Popsopedia::get("Solarion");
+    }
 }
 
 bool Game::battle(Player& player, Popsmon& wildPopsmon) {
-    int activeIndex = 0;
+    int activeIndex = 0; 
     Popsmon& active = player.popsmonCollection[activeIndex];
 
     while (true) {
@@ -103,6 +111,7 @@ bool Game::battle(Player& player, Popsmon& wildPopsmon) {
             std::cout << "========================================\n";
 
             for (int i = 0; i < (int)player.popsmonCollection.size(); i++) {
+                if (i == activeIndex) continue; // Skip active Popsmon
                 const auto& p = player.popsmonCollection[i];
                 std::cout << "  " << i+1 << ". " << p.name
                           << " (HP: " << p.health << ")\n";
@@ -116,7 +125,12 @@ bool Game::battle(Player& player, Popsmon& wildPopsmon) {
 
             if (swapChoice >= 1 && swapChoice <= (int)player.popsmonCollection.size()) {
                 activeIndex = swapChoice - 1;
-                active = player.popsmonCollection[activeIndex];
+
+                if (player.popsmonCollection[activeIndex].health <= 0) {
+                    std::cout << "Cannot switch to a fainted Popsmon!\n";
+                    continue;
+                }
+                std::swap(active, player.popsmonCollection[activeIndex]);
                 std::cout << "Go, " << active.name << "!\n";
                 continue; // skip wild turn
             } else {
@@ -150,20 +164,73 @@ bool Game::battle(Player& player, Popsmon& wildPopsmon) {
         if (active.health <= 0) {
             std::cout << active.name << " fainted!\n";
 
+            // Check if player has any Popsmon left
             bool hasAlive = false;
-            for (auto& p : player.popsmonCollection)
-                if (p.health > 0) hasAlive = true;
+            for (const auto& p : player.popsmonCollection) {
+                if (p.health > 0) {
+                    hasAlive = true;
+                    break;
+                }
+            }
 
             if (!hasAlive) {
                 std::cout << "You have no Popsmon left!\n";
                 return false;
             }
 
+            // Prompt to switch Popsmon
+            std::cout << "Choose another Popsmon to continue the battle:\n";
+            drawPartyUI(player, activeIndex);
+
+            int swapChoice;
+            std::cin >> swapChoice;
+
             std::cout << "Choose another Popsmon!\n";
             continue;
         }
     }
 }
+
+void Game::drawPartyUI(const Player& player, int activeIndex) {
+    std::cout << "\n========================================\n";
+    std::cout << "              YOUR PARTY\n";
+    std::cout << "========================================\n";
+
+    for (int i = 0; i < (int)player.popsmonCollection.size(); i++) {
+        const auto& p = player.popsmonCollection[i];
+
+        //Active Popsmon highlight
+        if (i == activeIndex)
+            std::cout << "-> " << p.name
+                      << "  (ACTIVE)\n"; 
+        else {
+            std::cout << p.name << "\n";
+        }
+        std::cout << "      HP: " << p.health << "/" << p.maxHealth << "  \n";
+
+        // Simple ASCII health bar
+        int barWidth = 20;
+        float ratio = (float)p.health / p.maxHealth;
+        int filled = (int)(ratio * barWidth);
+
+        std::cout << "[";
+        for (int j = 0; j < barWidth; j++) {
+            if (j < filled) std::cout << "=";
+            else std::cout << " ";
+    }
+    std::cout << "]\n";
+
+    // Fainted indicator
+    if (p.health <= 0) {
+        std::cout << "   \033[91mFAINTED\033[0m\n";
+    }
+
+    std::cout << "\n";
+    }
+
+    std::cout << "========================================\n";
+}
+
 
 bool Game::attemptCapture(const Popsmon& wildPopsmon) { // Capture logic
     // Lower HP increases capture chance
@@ -221,7 +288,7 @@ void Game::start() {
     Popsmon starter = chooseStarter();
     player.addPopsmon(starter);
 
-    std::cout << "\nYour adventure begins!\n";
+    std::cout << "\n\033[1;32mYour adventure begins!\033[0m\n";
 
     // Main game loop
     while (true) {
@@ -237,6 +304,11 @@ void Game::start() {
         std::cin >> choice;
 
         if (choice == 1) {
+            if (!player.hasAlivePopsmon()) {
+                std::cout << "You have no healthy Popsmon to explore!\n";
+                std::cout << "Visit the Pops Center to heal your Popsmon.\n";
+                continue;
+            }
             Popsmon wild = Popsopedia::randomWild();
             std::cout << "\nA wild " << wild.name << " appeared!\n";
             battle(player, wild);

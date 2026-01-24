@@ -16,3 +16,12 @@ void Player::showCollection() {
                   << ", Attack: " << pmon.attack << "\n";
     }
 }
+
+bool Player::hasAlivePopsmon() const {
+    for (const auto& p : popsmonCollection) {
+        if (p.health > 0) {
+            return true;
+        }
+    }
+    return false;
+}

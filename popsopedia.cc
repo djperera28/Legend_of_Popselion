@@ -173,7 +173,7 @@ Popsmon Popsopedia::get(const std::string& name) { // Retrieve Popsmon by name
     return registry.at(name);
 }
 
-Popsmon Popsopedia::randomWild() { // Get a random wild Popsmon
+Popsmon Popsopedia::randomWild() {                 // Get a random wild Popsmon
     std::vector<std::string> wildList = {
         "Voltaris",
         "Gravemantle",
@@ -183,6 +183,6 @@ Popsmon Popsopedia::randomWild() { // Get a random wild Popsmon
         "Psyperian"
     };
 
-    int index = std::rand() % wildList.size(); // Random index
-    return registry[wildList[index]];          // Return random wild Popsmon
+    int index = std::rand() % wildList.size();     // Random index
+    return registry[wildList[index]];              // Return random wild Popsmon
 }

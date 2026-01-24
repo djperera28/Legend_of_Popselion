@@ -10,7 +10,7 @@ static float getRandomMultiplier() {
     return dist(gen); 
 }
 
-float calculateDamage( // Calculates damage from attacker to defender using a specific move
+float calculateDamage(                                           // Calculates damage from attacker to defender using a specific move
     const Popsmon& attacker,
     const Popsmon& defender,
     const Move& move

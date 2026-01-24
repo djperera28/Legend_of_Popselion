@@ -10,9 +10,10 @@ class Game {
         Popsmon chooseStarter();                                              // Function to choose starter Popsmon
         bool battle(Player& player, Popsmon& wildPopsmon);                    // Battle function
         void drawBattleUI(const Popsmon& active, const Popsmon& wildPopsmon); // Function to draw battle UI
-
+        void drawPartyUI(const Player& player, int activeIndex);              // Function to draw party UI
         bool attemptCapture(const Popsmon& wildPopsmon);                      // Function to attempt capturing a wild Popsmon
         
+
 };
 
 #endif // GAME_H
