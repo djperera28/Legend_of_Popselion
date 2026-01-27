@@ -8,7 +8,7 @@ class Game {
         void start();                                                         // Function to start the game
         void showControls();                                                  // Function to show game controls
         Popsmon chooseStarter();                                              // Function to choose starter Popsmon
-        bool battle(Player& player, Popsmon& wildPopsmon);                    // Battle function
+        bool battle(Player& player, Popsmon& wildPopsmon);                                           
         void drawBattleUI(const Popsmon& active, const Popsmon& wildPopsmon); // Function to draw battle UI
         void drawPartyUI(const Player& player, int activeIndex);              // Function to draw party UI
         bool attemptCapture(const Popsmon& wildPopsmon);                      // Function to attempt capturing a wild Popsmon
