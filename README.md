@@ -4,7 +4,7 @@
 ## Story
 - COMING SOON!
 
-## Overview - 
+## Overview  
 
 - Popsmon Adventure is a text‑based, Pokémon‑inspired RPG built entirely in C++. You explore the "world", encounter wild Popsmon, choose strategic moves in battle, and build a team of unique elemental creatures. The game runs directly in the terminal and embraces a nostalgic retro style.
 
@@ -29,5 +29,5 @@
 - Boss fight
 - Collect them all! (Achievement)
 - Healing Update
-- 
+- Story
 
