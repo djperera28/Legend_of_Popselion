@@ -8,7 +8,7 @@ void Player::addPopsmon(const Popsmon& pmon) {
 }
 
 void Player::showCollection() {
-    std::cout << "Your Popsmon Collection:\n";
+    std::cout << "\n\033[1;96mYour Popsmon Collection:\033[0m\n";
     for (const auto& pmon : popsmonCollection) {
         std::cout << "Name: " << pmon.name 
                   << ", Type: " << typeToString(pmon.type)

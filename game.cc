@@ -24,11 +24,17 @@ void Game::start() {
         std::cout << "  2. Controls\n";
         std::cout << "  3. Exit\n";
         std::cout << "============================================\n";
-        std::cout << "Choose an option: ";
+        std::cout << "Choose an Action: \n";
 
         int choice;
         std::cin >> choice;
 
+        if (!choice) {
+            std::cout << "Please enter a number!\n";
+            std::cin.clear(); // clear error flag
+            std::cin.ignore(); // discard invalid input
+            continue;
+        }
         if (choice == 1) break;
         if (choice == 2) {
             showControls();
@@ -37,9 +43,10 @@ void Game::start() {
         if (choice == 3) {
             std::cout << "Goodbye!\n";
             return;
+        } else if (choice != int()) {
+            std::cout << "Invalid choice.\n";
+            continue;
         }
-
-        std::cout << "Invalid choice.\n";
     }
 
     Player player;
@@ -52,15 +59,21 @@ void Game::start() {
     while (true) {
         std::cout << "\n========================================\n";
         std::cout << "  1. \033[1;32mExplore\033[0m\n";
-        std::cout << "  2. View Popsmon\n";
+        std::cout << "  2. \033[1;96mView Popsmon\033[0m\n";
         std::cout << "  3. \033[1;33mPops Center\033[0m\n";
         std::cout << "  4. Exit Game\n";
         std::cout << "========================================\n";
-        std::cout << "Choose:  \n";
+        std::cout << "Choose:  ";
 
         int choice;
         std::cin >> choice;
 
+        if (!choice) {
+            std::cout << "Please enter a number!\n";
+            std::cin.clear(); // clear error flag
+            std::cin.ignore(); // discard invalid input
+            continue;
+        }
         if (choice == 1) {
             if (!player.hasAlivePopsmon()) {
                 std::cout << "You have no healthy Popsmon to explore!\n";
@@ -144,14 +157,24 @@ Popsmon Game::chooseStarter() {
     int choice;
     std::cin >> choice;
 
-    if (choice == 1) return Popsopedia::get("Solarion");
-    if (choice == 2) return Popsopedia::get("Thornbreaker");
-    if (choice == 3) return Popsopedia::get("Aquastral");
+    while (!choice) {
+            std::cout << "Please enter a number!\n";
+            std::cin.clear(); // clear error flag
+            std::cin.ignore(); // discard invalid input
+            std::cin >> choice;
+        }
+    if(choice == 1) { 
+        return Popsopedia::get("Solarion"); }
+    if (choice == 2) { 
+        return Popsopedia::get("Thornbreaker"); }
+    if (choice == 3) { 
+        return Popsopedia::get("Aquastral"); }
     else {
-        std::cout << "Invalid choice, defaulting to Solarion.\n";
-        return Popsopedia::get("Solarion");
+        std::cout << "Invalid Selection. Defaulting to Solarion";
+        return Popsopedia::get("Solarion") ;
+        }
     }
-}
+
 
 void Game::drawPartyUI(const Player& player, int activeIndex) {
     std::cout << "\n========================================\n";
@@ -163,11 +186,11 @@ void Game::drawPartyUI(const Player& player, int activeIndex) {
 
         //Active Popsmon highlight
         if (i == activeIndex)
-            std::cout << "-> " << p.name
+            std::cout << "-> " << i+1 << ". " << p.name
                       << "  (ACTIVE)\n"; 
         else {
-            
-            std::cout << p.name << "\n";
+
+            std::cout << i+1 << ". " << p.name << "\n";
         }
         std::cout << "      HP: " << p.health << "/" << p.maxHealth << "  \n";
 
@@ -202,6 +225,12 @@ bool Game::battle(Player& player, Popsmon& wildPopsmon) {
         int choice;
         std::cin >> choice;
 
+        if (!choice) {
+            std::cout << "Please enter a number!\n";
+            std::cin.clear(); // clear error flag
+            std::cin.ignore(); // discard invalid input
+            continue;
+        }
         // Player chooses a move
         if (choice >= 1 && choice <= (int)active.moves.size()) {
             Move move = active.moves[choice - 1];
@@ -303,7 +332,7 @@ bool Game::battle(Player& player, Popsmon& wildPopsmon) {
                 }
 
                 if (player.popsmonCollection[newIndex].health <= 0) {
-                    std::cout << "That player has fainted!\n";
+                    std::cout << "That popsmon has fainted!\n";
                     continue;
                 }
 
