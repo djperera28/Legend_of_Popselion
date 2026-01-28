@@ -154,7 +154,7 @@ void Popsopedia::init() {
     // Legendary Popsmon (___)
     { 
         Popsmon p;
-        p.name = "Pops-El";
+        p.name = "Popselion";
         p.type = Type::Infinity;
         p.maxHealth = 999;
         p.health = p.maxHealth;
@@ -175,12 +175,15 @@ Popsmon Popsopedia::get(const std::string& name) { // Retrieve Popsmon by name
 
 Popsmon Popsopedia::randomWild() {                 // Get a random wild Popsmon
     std::vector<std::string> wildList = {
-        "Voltaris",
+        "Aquastral",
         "Gravemantle",
-        "Zephyra",
-        "Noctalon",
         "Luminaryn",
-        "Psyperian"
+        "Noctalon",
+        "Psyperian",
+        "Solarion",
+        "Thornbreaker",
+        "Voltaris",
+        "Zephyra"
     };
 
     int index = std::rand() % wildList.size();     // Random index

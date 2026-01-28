@@ -18,11 +18,11 @@ void Game::start() {
         std::cout << " ▒█▄▄█ ▒█  █ ▒█▄▄█ ▒█▄▄▄ ▒█ █ █ ▒█  █ ▒█ █ █\n";
         std::cout << " ▒█    ▒█▄▄█ ▒█    ▒▄▄▄█ ▒█   █ ▒█▄▄█ ▒█  ██\n";
         std::cout << "============================================\n";
-        std::cout << "             LEGEND OF POPSELION\n";
+        std::cout << "             \033[93mLEGEND OF POPSELION\033[0m\n";
         std::cout << "============================================\n";
-        std::cout << "  1. Start Adventure\n";
+        std::cout << "  1. \033[32mStart Adventure\033[0m\n";
         std::cout << "  2. Controls\n";
-        std::cout << "  3. Exit\n";
+        std::cout << "  3. \033[31mExit\033[0m\n";
         std::cout << "============================================\n";
         std::cout << "Choose an Action: \n";
 
@@ -41,7 +41,7 @@ void Game::start() {
             continue;
         }
         if (choice == 3) {
-            std::cout << "Goodbye!\n";
+            std::cout << "\033[90mTill we meet again Traveler...\033[0m\n";
             return;
         } else if (choice != int()) {
             std::cout << "Invalid choice.\n";
@@ -53,13 +53,14 @@ void Game::start() {
     Popsmon starter = chooseStarter();
     player.addPopsmon(starter);
 
-    std::cout << "\n\033[1;32mYour adventure begins!\033[0m\n";
+    std::cout << "\n========================================\n";
+    std::cout << "\n\033[1;32mYour Adventure begins!\033[0m\n";
 
     // Main game loop
     while (true) {
         std::cout << "\n========================================\n";
         std::cout << "  1. \033[1;32mExplore\033[0m\n";
-        std::cout << "  2. \033[1;96mView Popsmon\033[0m\n";
+        std::cout << "  2. \033[1;96mPopsopedia\033[0m\n";
         std::cout << "  3. \033[1;33mPops Center\033[0m\n";
         std::cout << "  4. Exit Game\n";
         std::cout << "========================================\n";
@@ -111,24 +112,25 @@ void Game::showControls() {
     std::cout << "               HOW TO PLAY\n";
     std::cout << "========================================\n\n";
 
-    std::cout << "▶ EXPLORATION\n";
-    std::cout << "  Walk into tall grass to encounter\n";
-    std::cout << "  wild Popsmon.\n\n";
+    std::cout << "▶ \033[92mEXPLORATION\033[0m\n";
+    std::cout << "  Travel across Loisinia to\n";
+    std::cout << "  encounter wild Popsmon.\n\n";
 
-    std::cout << "▶ BATTLE\n";
+    std::cout << "▶ \033[91mBATTLE\033[0m\n";
     std::cout << "  • Choose moves each turn\n";
     std::cout << "  • Switch Popsmon when needed\n";
     std::cout << "  • Type matchups affect damage\n\n";
 
-    std::cout << "▶ PARTY\n";
+    std::cout << "▶ \033[96mPARTY\033[0m\n";
     std::cout << "  • Carry multiple Popsmon\n";
-    std::cout << "  • Swap during battle\n";
-    std::cout << "  • Heal between encounters (future!)\n\n";
+    std::cout << "  • Swap during battle\n\n";
+    //std::cout << "  • Heal between encounters (future!)\n\n";
 
     std::cout << "▶ MENU\n";
-    std::cout << "  • Explore  – Find wild Popsmon\n";
-    std::cout << "  • Popsmon  – View your party\n";
-    std::cout << "  • Exit     – Leave the adventure\n\n";
+    std::cout << "  • Explore     – Find wild Popsmon\n";
+    std::cout << "  • Popsopedia  – View your Popsmon in your party\n";
+    std::cout << "  • Pops Center – Heal your damaged Popsmon\n";
+    std::cout << "  • Exit        – Leave the adventure\n\n";
 
     std::cout << "========================================\n";
     std::cout << "        PRESS ENTER TO CONTINUE\n";
@@ -164,13 +166,16 @@ Popsmon Game::chooseStarter() {
             std::cin >> choice;
         }
     if(choice == 1) { 
+        std::cout << "You chose \033[31mSolarion\033[0m\n";
         return Popsopedia::get("Solarion"); }
     if (choice == 2) { 
+        std::cout << "You chose \033[32mThornbreaker\033[0m\n";
         return Popsopedia::get("Thornbreaker"); }
     if (choice == 3) { 
+        std::cout << "You chose \033[34mAquastral\033[0m\n";
         return Popsopedia::get("Aquastral"); }
     else {
-        std::cout << "Invalid Selection. Defaulting to Solarion";
+        std::cout << "Invalid Selection. Defaulting to Solarion\n";
         return Popsopedia::get("Solarion") ;
         }
     }
@@ -217,8 +222,8 @@ bool Game::battle(Player& player, Popsmon& wildPopsmon) {
         std::cout << "  " << i+1 << ". " << active.moves[i].name
                   << "  [" << typeToString(active.moves[i].type) << "]\n";
         }
-        std::cout << "  " << active.moves.size() + 1 << ". Switch Popsmon\n";
-        std::cout << "  " << active.moves.size() + 2 << ". Capture\n\n";
+        std::cout << "  " << active.moves.size() + 1 << ". \033[36mSwitch Popsmon\033[0m\n";
+        std::cout << "  " << active.moves.size() + 2 << ". \033[95mCapture\033[0m\n\n";
         std::cout << "========================================\n";
         std::cout << "Action: ";
 
