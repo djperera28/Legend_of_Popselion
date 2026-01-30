@@ -370,3 +370,43 @@ bool Game::attemptCapture(const Popsmon& wildPopsmon) { // Capture logic
     return roll < finalChance;
 
     }
+
+void Game::drawBossBattleUI(const Popsmon& active, const Popsmon& p) {
+    std::cout << "\n========================================\n";
+    std::cout << "   YOUR POPSMON              WILD POPSMON\n";
+    std::cout << "   " << active.name << " (HP: " << active.health << "/" << active.maxHealth << ")\n";
+    std::cout << "   \033[91mVS\033[0m\n";
+    std::cout << "   " << p.name << " (HP: " << p.health << "/" << p.maxHealth << ")\n";
+    std::cout << "========================================\n";
+}
+
+//boss fight
+bool Game::bossBattle(Player& player, Popsmon& p, PlayerAchievement) {
+    int activeIndex = 0; 
+    while (true) {
+    Popsmon& active = player.popsmonCollection[activeIndex];
+
+    drawBossBattleUI(active, p);
+
+        std::cout << "\nChoose your action:\n";
+        for (int i = 0; i < (int)active.moves.size(); i++) {
+        std::cout << "  " << i+1 << ". " << active.moves[i].name
+                  << "  [" << typeToString(active.moves[i].type) << "]\n";
+        }
+        std::cout << "  " << active.moves.size() + 1 << ". \033[36mSwitch Popsmon\033[0m\n";
+        std::cout << "  " << active.moves.size() + 2 << ". \033[95mCapture\033[0m\n\n";
+        std::cout << "========================================\n";
+        std::cout << "Action: ";
+
+        int choice;
+        std::cin >> choice;
+
+        if (!choice) {
+            std::cout << "Please enter a number!\n";
+            std::cin.clear(); // clear error flag
+            std::cin.ignore(); // discard invalid input
+            continue;
+        
+        }
+    }
+}

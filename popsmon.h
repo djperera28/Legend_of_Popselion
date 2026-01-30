@@ -16,7 +16,7 @@ struct Popsmon {
         std::vector<Move> moves; 
 
         Popsmon()
-            : name(""), type(Type::Fire), health(0), maxHealth(100), attack(0) {}
+            : name(""), type(Type::Fire), health(0), maxHealth(0), attack(0) {}
 
         Popsmon(std::string name, Type type, int health, int attack);
 

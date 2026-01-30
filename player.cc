@@ -25,3 +25,55 @@ bool Player::hasAlivePopsmon() const {
     }
     return false;
 }
+
+
+bool typeRequiredForAchievement[(int)Type::COUNT] = { 
+        true, // Fire
+        true, // Nature
+        true, // Water
+        true, // Electric
+        true, // Wind
+        true, // Earth
+        true, // Shadow
+        true, // Light
+        true, // Psychic
+        false
+     };
+     
+void obtainType(PlayerAchievement& progress, Type type) {
+    int index = (int)type;
+
+    if (progress.typeRequiredForAchievement[index])
+        return; // already collected
+
+    progress.typeRequiredForAchievement[index] = true;
+
+    //check if all types are collected
+    bool allCollected = true;
+    for (bool hasType : progress.typeRequiredForAchievement) {
+        if (!hasType) {
+            allCollected = false;
+            break;
+            }
+        }
+
+        if (allCollected && !progress.allTypesAchievement) {
+        progress.allTypesAchievement = true;
+
+        // world reaction 
+        std::cout << "\nThe world bowed without knowing why...\n";
+        std::cout << "An ominous presence is felt..\n";
+        
+        }
+}
+
+void bossEncounter(const PlayerAchievement& progress) {
+    if (!progress.allTypesAchievement) {
+        return;
+        }
+
+        std::cout << "\nA voice echoes... ..  .\n";
+        std::cout << "You..\n";
+        std::cout << "You've done the impossible...\n";
+        std::cout << " step forward, young Traveler..\n";
+    }

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "popsmon.h"
+#include "typechart.h"
 
 class Player {
     public:
@@ -11,5 +12,11 @@ class Player {
         void addPopsmon(const Popsmon& pmon); // Function to add a Popsmon to the collection
         void showCollection(); // Function to display the player's Popsmon collection
 };      
+
+struct PlayerAchievement {
+    bool typeRequiredForAchievement[(int)Type::COUNT];
+    bool allTypesAchievement = false;
+    void bossEncounter(const PlayerAchievement& progress);
+};
 
 #endif // PLAYER_H
