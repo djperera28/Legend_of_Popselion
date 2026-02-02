@@ -151,20 +151,20 @@ void Popsopedia::init() {
         registry[p.name] = p;
     }
 
-    // Legendary Popsmon (___)
+    // Legendary Popsmon (BOSS)
     { 
-        Popsmon p;
-        p.name = "Popselion";
-        p.type = Type::Infinity;
-        p.maxHealth = 999;
-        p.health = p.maxHealth;
-        p.attack = 99;
-        p.moves = {
+        Popsmon boss;
+        boss.name = "Popselion";
+        boss.type = Type::Infinity;
+        boss.maxHealth = 999;
+        boss.health = boss.maxHealth;
+        boss.attack = 99;
+        boss.moves = {
             {"Big swing", 10, Type::Infinity},
             {"Swap out", 0, Type::Infinity},
             {"Ult", 0, Type::Infinity}
         };
-        registry[p.name] = p;
+        registry[boss.name] = boss;
     }
 
 }
@@ -188,4 +188,12 @@ Popsmon Popsopedia::randomWild() {                 // Get a random wild Popsmon
 
     int index = std::rand() % wildList.size();     // Random index
     return registry[wildList[index]];              // Return random wild Popsmon
+}
+
+Popsmon Popsopedia::bossEncounter() {
+    std::vector<std::string> bossList = {
+        "Popselion"
+    };
+
+    return registry["Popselion"];
 }

@@ -10,6 +10,7 @@ class Popsopedia {
         static void init();                                       // loads all Popsmon into the registry
         static Popsmon get(const std::string& name);
         static Popsmon randomWild();
+        static Popsmon bossEncounter();
 
     private:
         static std::unordered_map<std::string, Popsmon> registry; // name to Popsmon mapping

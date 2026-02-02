@@ -5,6 +5,26 @@
 
 void Player::addPopsmon(const Popsmon& pmon) {
     popsmonCollection.push_back(pmon);
+
+    int index = (int)pmon.type;
+    if (!achievement.typeCollected[index]) {
+        achievement.typeCollected[index] = true;
+    }
+
+    bool allCollected = true;
+    for (int i = 0; i < (int)Type::COUNT - 1; i++) {
+        if (!achievement.typeCollected[i]) {
+            allCollected = false;
+            break;
+        }
+    }
+
+    if (allCollected && !achievement.allTypesAchievement) {
+        achievement.allTypesAchievement = true;
+
+        //std::cout << "";
+        //std::cout << "";
+    }
 }
 
 void Player::showCollection() {
@@ -25,55 +45,3 @@ bool Player::hasAlivePopsmon() const {
     }
     return false;
 }
-
-
-bool typeRequiredForAchievement[(int)Type::COUNT] = { 
-        true, // Fire
-        true, // Nature
-        true, // Water
-        true, // Electric
-        true, // Wind
-        true, // Earth
-        true, // Shadow
-        true, // Light
-        true, // Psychic
-        false
-     };
-     
-void obtainType(PlayerAchievement& progress, Type type) {
-    int index = (int)type;
-
-    if (progress.typeRequiredForAchievement[index])
-        return; // already collected
-
-    progress.typeRequiredForAchievement[index] = true;
-
-    //check if all types are collected
-    bool allCollected = true;
-    for (bool hasType : progress.typeRequiredForAchievement) {
-        if (!hasType) {
-            allCollected = false;
-            break;
-            }
-        }
-
-        if (allCollected && !progress.allTypesAchievement) {
-        progress.allTypesAchievement = true;
-
-        // world reaction 
-        std::cout << "\nThe world bowed without knowing why...\n";
-        std::cout << "An ominous presence is felt..\n";
-        
-        }
-}
-
-void bossEncounter(const PlayerAchievement& progress) {
-    if (!progress.allTypesAchievement) {
-        return;
-        }
-
-        std::cout << "\nA voice echoes... ..  .\n";
-        std::cout << "You..\n";
-        std::cout << "You've done the impossible...\n";
-        std::cout << " step forward, young Traveler..\n";
-    }
