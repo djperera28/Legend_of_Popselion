@@ -160,9 +160,9 @@ void Popsopedia::init() {
         boss.health = boss.maxHealth;
         boss.attack = 99;
         boss.moves = {
-            {"Big swing", 10, Type::Infinity},
-            {"Swap out", 0, Type::Infinity},
-            {"Ult", 0, Type::Infinity}
+            {"Pops, Bops, and the Popular Way", 10, Type::Infinity},
+            {"Pop Out", 0, Type::Infinity}, // swap move
+            {"POPSELION FOREVER", 0, Type::Infinity} // boss heal
         };
         registry[boss.name] = boss;
     }

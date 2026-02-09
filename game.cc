@@ -457,6 +457,20 @@ bool Game::bossBattle(Player& player) {
         std::cout << "Popselion " << boss.name << " used " << bossMove.name
                   << "! It dealt " << dmg << " damage.\n";
 
+        if (bossMove.forceSwap == "Pop Out") {
+            std::cout << boss.name << " forces you to switch Popsmon!\n";
+            for (int i = 0; i < (int)player.popsmonCollection.size(); i++) {
+                if (i == activeIndex) continue; // Skip active Popsmon
+                const auto& p = player.popsmonCollection[i];
+                std::cout << "  " << i+1 << ". " << p.name
+                          << " (HP: " << p.health << ")\n";
+            }
+        if (bossMove.bossHeal == "POPSELION FOREVER") {
+            std::cout << boss.name << " heals itself with POPSELION FOREVER!\n";
+            boss.heal(100); // Heal 100 HP
+        }
+
+
         if (active.health <= 0) {
             std::cout << active.name << " has fallen...\n";
 
@@ -498,8 +512,9 @@ bool Game::bossBattle(Player& player) {
                       << "!\n";
             
             break;
-        }
-        continue;
+            }
+            continue;
+            }
         }
     }
 }
